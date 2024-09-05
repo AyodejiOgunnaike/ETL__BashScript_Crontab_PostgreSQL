@@ -1,0 +1,170 @@
+<h6> CoreDataEngineers ETL Process & SQL Tasks <h6>
+
+<h5> The Architectural Diagram for the ETL process is as shown below <h5>
+
+![alt text](image.png)
+
+This repository contains the complete solution for the ETL (Extract, Transform, Load) process and SQL tasks assigned to a newly hired data engineer as part of the CoreDataEngineers problem statement. The solution includes well-commented Bash scripts to handle the ETL process and SQL queries to analyze a given dataset.
+
+<h3> Project Overview <h3>
+The CoreDataEngineers infrastructure is based on the Linux operating system, and the task is to automate data handling using Bash scripts and PostgreSQL for database operations. The tasks involve downloading a CSV file, transforming it, and loading it into a PostgreSQL database for analysis.
+
+
+<h3> Folder Structure </h3>
+
+├── README.md               # Project documentation
+├── Scripts                 # Main folder containing Bash and SQL scripts
+│   ├── Bash                # Bash scripts for ETL and file management
+│   │   ├── etl_script.sh       # Bash script for the ETL process
+│   │   ├── move_files.sh       # Script for moving CSV/JSON files
+│   └── SQL                 # SQL scripts for data analysis
+│       ├── query_1.pgsql         # SQL Query 1 (Orders over 4000)
+│       ├── query_2.pgsql         # SQL Query 2 (Standard_qty = 0)
+│       ├── query_3.pgsql         # SQL Query 3 (Company names)
+│       └── query_4.pgsql         # SQL Query 4 (Sales rep and regions)
+├── .pgpass                 # PostgreSQL password file for secure access
+└── cron.txt                # Cron job scheduling file
+
+
+<h3> 1. Bash Scripts <h3>
+
+<h2> ETL Script: <h2> etl_script.sh
+
+Description:
+
+The ETL process is handled by a Bash script that follows these three steps:
+
+Extract: Downloads or copies the source CSV file to a raw folder.
+
+Transform: Modifies the dataset by renaming a column and selecting only the required columns.
+
+Load: Saves the transformed data into a gold folder for further use.
+
+How to Run:
+
+Make sure the script has executable permissions by running the command below:
+
+chmod +x etl_script.sh
+
+Run the ETL script using the command below:
+
+./etl_script.sh
+
+Extract Process:
+
+The script copies the CSV file from the given source directory to the raw folder and confirms successful extraction
+
+Transform Process:
+
+The script transforms the file by renaming a specific column which is Variable_code by replacing 'V' with 'v' and saving only the relevant columns (Year, Value, Units, variable_code) into a new CSV file in the transformed folder.
+
+Load Process:
+
+The transformed file is moved to the gold folder to complete the ETL pipeline.
+
+
+<h2> File Moving Script: <h2> move_files.sh
+
+Description:
+
+This script moves all .csv and .json files from one directory to another.
+
+Run the scripts using the commands below one after the other:
+
+chmod +x move_files.sh
+./move_files.sh
+
+Script functionality:
+
+- It checks if the destination directory exists and creates it if necessary.
+
+- It moves all CSV and JSON files from the source directory to the json_and_CSV folder.
+
+
+
+<h3> PostgreSQL Data Load Script: <h3> data_to_postgres.sh
+
+Description:
+
+This script iterates over each CSV file in the specified directory and loads the data into the PostgreSQL orders, accounts, web_events, sales_rep and region tables one after the other.
+
+Ensure the script is executable by running the below command:
+
+chmod +x load_to_postgres.sh
+
+Run the below per each table load:
+
+./data_to_postgres.sh
+
+
+<h5> 2. SQL Queries <h5>
+
+<h3> Query 1: Orders over 4000 units <h3>
+
+File: Query_1.pgsql
+
+Finds a list of order IDs where either gloss_qty or poster_qty is greater than 4000. Only include the id field in the resulting table.
+
+
+<h3> Query 2: Orders with Standard_qty = 0 and gloss_qty or poster_qty over 1000 <h3>
+
+File: Query_2.pgsql
+
+Finds orders where standard_qty is zero, and either gloss_qty or poster_qty is over 1000.
+
+
+<h3> Query 3: Company Names Starting with 'C' or 'W' and containing 'ana' but not 'eana' <h3>
+
+File: Query_3.pgsql 
+
+Finds all the company names that start with a 'C' or 'W', and where the primary contact contains 'ana' or 'Ana', but does not contain 'eana'.
+
+<h3> Query 4: Region, Sales Rep, and Account Names <h3>
+
+File: Query_4.pgsql
+
+Provides a table showing the region for each sales rep along with their associated accounts. The table should have columns for region name, sales rep name, and account name. The accounts should be sorted alphabetically.
+
+
+<h5> 3. Secure PostgreSQL Password Management <h5>
+
+The .pgpass file is used to securely store PostgreSQL credentials, preventing password exposure in the script.
+
+- Created a .pgpass file in the project working directory and secure store my database password in it.
+
+- Added the the posey database password content to the file
+
+- Ensured correct permissions for the .pgpass file by running the command below:
+
+  chmod 600 .pgpass
+
+- Modified the Bash script to remove the password from the command and automatically pull from .pgpass.
+
+
+<h5> 4. Cron Job Scheduling <h5>
+
+To run the ETL process automatically every day at 12:00 AM, I scheduled a cron job.
+
+<h3> Steps: <h3>
+
+Open the crontab editor by running the command below:
+
+crontab -e
+
+Add the following line to schedule the script:
+
+0 0 * * * /path/to/etl_script.sh
+
+
+Note: represent the path to the ETL script, as this was replaced by the path to directory where I have my etl script
+
+Save and exit. The ETL script will now run daily at midnight.
+
+
+
+<h5> Conclusion <h5>
+
+This project demonstrates a simple yet effective ETL pipeline using Bash scripts, along with SQL queries for data analysis. The solution ensures password security for database access and allows automation through cron jobs.
+
+
+
