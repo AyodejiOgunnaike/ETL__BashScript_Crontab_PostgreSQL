@@ -4,6 +4,6 @@ primary_poc AS primary_contact
 FROM accounts 
 WHERE (name LIKE 'C%' OR name LIKE 'W%') 
 AND (primary_poc LIKE '%ana%') 
-AND (primary_poc NOT ILIKE '%eana%');
+AND (primary_poc NOT LIKE '%eana%');
 
 

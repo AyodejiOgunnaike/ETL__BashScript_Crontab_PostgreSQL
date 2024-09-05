@@ -2,8 +2,6 @@
 
 *.csv
 
-*.png
-
 gold/*.csv
 
 raw/*.csv
