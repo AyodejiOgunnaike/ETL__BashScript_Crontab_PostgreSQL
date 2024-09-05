@@ -1,16 +1,17 @@
-<h6> CoreDataEngineers ETL Process & SQL Tasks <h6>
+# CoreDataEngineers ETL Process & SQL Tasks
 
-<h5> The Architectural Diagram for the ETL process is as shown below <h5>
+# The Architectural Diagram for the ETL process is as shown below
 
-![alt text](image.png)
+   ![alt text](image.png)
 
 This repository contains the complete solution for the ETL (Extract, Transform, Load) process and SQL tasks assigned to a newly hired data engineer as part of the CoreDataEngineers problem statement. The solution includes well-commented Bash scripts to handle the ETL process and SQL queries to analyze a given dataset.
 
-<h3> Project Overview <h3>
+### Project Overview
+
 The CoreDataEngineers infrastructure is based on the Linux operating system, and the task is to automate data handling using Bash scripts and PostgreSQL for database operations. The tasks involve downloading a CSV file, transforming it, and loading it into a PostgreSQL database for analysis.
 
 
-<h3> Folder Structure </h3>
+### Folder Structure
 
 ├── README.md               # Project documentation
 ├── Scripts                 # Main folder containing Bash and SQL scripts
@@ -26,9 +27,9 @@ The CoreDataEngineers infrastructure is based on the Linux operating system, and
 └── cron.txt                # Cron job scheduling file
 
 
-<h3> 1. Bash Scripts <h3>
+### 1. Bash Scripts
 
-<h2> ETL Script: <h2> etl_script.sh
+#### ETL Script: ##### etl_script.sh
 
 Description:
 
@@ -63,7 +64,7 @@ Load Process:
 The transformed file is moved to the gold folder to complete the ETL pipeline.
 
 
-<h2> File Moving Script: <h2> move_files.sh
+#### File Moving Script:  ##### move_files.sh
 
 Description:
 
@@ -82,7 +83,7 @@ Script functionality:
 
 
 
-<h3> PostgreSQL Data Load Script: <h3> data_to_postgres.sh
+#### PostgreSQL Data Load Script: ##### data_to_postgres.sh
 
 Description:
 
@@ -97,36 +98,36 @@ Run the below per each table load:
 ./data_to_postgres.sh
 
 
-<h5> 2. SQL Queries <h5>
+#### 2. SQL Queries
 
-<h3> Query 1: Orders over 4000 units <h3>
+##### Query 1: Orders over 4000 units 
 
 File: Query_1.pgsql
 
 Finds a list of order IDs where either gloss_qty or poster_qty is greater than 4000. Only include the id field in the resulting table.
 
 
-<h3> Query 2: Orders with Standard_qty = 0 and gloss_qty or poster_qty over 1000 <h3>
+##### Query 2: Orders with Standard_qty = 0 and gloss_qty or poster_qty over 1000
 
 File: Query_2.pgsql
 
 Finds orders where standard_qty is zero, and either gloss_qty or poster_qty is over 1000.
 
 
-<h3> Query 3: Company Names Starting with 'C' or 'W' and containing 'ana' but not 'eana' <h3>
+##### Query 3: Company Names Starting with 'C' or 'W' and containing 'ana' but not 'eana' 
 
 File: Query_3.pgsql 
 
 Finds all the company names that start with a 'C' or 'W', and where the primary contact contains 'ana' or 'Ana', but does not contain 'eana'.
 
-<h3> Query 4: Region, Sales Rep, and Account Names <h3>
+##### Query 4: Region, Sales Rep, and Account Names
 
 File: Query_4.pgsql
 
 Provides a table showing the region for each sales rep along with their associated accounts. The table should have columns for region name, sales rep name, and account name. The accounts should be sorted alphabetically.
 
 
-<h5> 3. Secure PostgreSQL Password Management <h5>
+##### 3. Secure PostgreSQL Password Management
 
 The .pgpass file is used to securely store PostgreSQL credentials, preventing password exposure in the script.
 
@@ -141,11 +142,11 @@ The .pgpass file is used to securely store PostgreSQL credentials, preventing pa
 - Modified the Bash script to remove the password from the command and automatically pull from .pgpass.
 
 
-<h5> 4. Cron Job Scheduling <h5>
+##### 4. Cron Job Scheduling
 
 To run the ETL process automatically every day at 12:00 AM, I scheduled a cron job.
 
-<h3> Steps: <h3>
+##### Steps:
 
 Open the crontab editor by running the command below:
 
@@ -162,7 +163,7 @@ Save and exit. The ETL script will now run daily at midnight.
 
 
 
-<h5> Conclusion <h5>
+## Conclusion
 
 This project demonstrates a simple yet effective ETL pipeline using Bash scripts, along with SQL queries for data analysis. The solution ensures password security for database access and allows automation through cron jobs.
 
